@@ -1,0 +1,90 @@
+package com.thelocalmarketplace.software;
+
+import com.jjjwelectronics.Item;
+import com.jjjwelectronics.Mass;
+import com.jjjwelectronics.scale.ElectronicScale;
+import com.jjjwelectronics.scanner.Barcode;
+import com.jjjwelectronics.scanner.BarcodeScanner;
+import com.jjjwelectronics.scanner.BarcodedItem;
+import com.thelocalmarketplace.hardware.BarcodedProduct;
+import com.thelocalmarketplace.hardware.Product;
+
+import powerutility.PowerGrid;
+
+public abstract class SelfCheckOutStationScanner {
+    
+    // The application context for the self-checkout station
+    private ApplicationContext application = null;
+
+    // Abstract method to initialize the self-checkout station
+    public abstract ApplicationContext initApplication();
+
+    // Method to start the self-checkout station
+    public void start(PowerGrid powerGrid){
+        application = initApplication(); // Initialize the application
+
+        application.plugIn(powerGrid); // Plug the station into the power grid
+
+        application.turnOn(); // Turn on the station
+
+        // Set the self-checkout station's status to ABLE after everything is set up
+        application.setCheckoutStationDeviceStatus(DeviceStatus.ABLE);
+    };
+
+    // Method for customers to add products
+    public void addProduct(Product product) throws Exception {
+        BarcodedItem barcodedItem = getBarcodedItem(product); // Get barcoded item from product
+
+        storeProduct((BarcodedProduct) product); // Store the barcoded product
+
+        scan(barcodedItem); // Scan the barcode
+
+        addAnItem(barcodedItem); // Place the item on the bagging area
+    }
+
+    private void addAnItem(Item item) throws Exception {
+        ElectronicScale baggingArea = application.checkoutStation.baggingArea;
+        
+        // Verify if the bagging area is usable
+        if(application.deviceStatusHashMap.get(baggingArea).getCode() != DeviceStatus.ABLE.getCode()){
+            throw new Exception("Station is out of work");
+        }
+        
+        application.blockBaggingArea(); // Block interaction with the bagging area
+        
+        baggingArea.addAnItem(item); // Place the item on the bagging area
+    }
+
+    private BarcodedItem getBarcodedItem(Product product) throws Exception {
+        // This block is for barcoded products
+        if(product instanceof BarcodedProduct){
+            BarcodedProduct barcodedProduct = (BarcodedProduct) product; // Get product information
+            Barcode barcode = barcodedProduct.getBarcode();
+            BarcodedItem barcodedItem = new BarcodedItem(barcode, new Mass(barcodedProduct.getExpectedWeight()));
+
+            return barcodedItem;
+        }
+        throw new Exception("Product does not conform to the expected type...");
+    }
+
+    // Method to scan the barcode
+    protected void scan(BarcodedItem item) throws Exception {
+        if(item == null){
+            throw new Exception("Invalid parameter...");
+        }
+        BarcodeScanner scanner = application.checkoutStation.scanner;
+
+        // Check if the scanner is usable
+        if(application.deviceStatusHashMap.get(scanner).getCode() != DeviceStatus.ABLE.getCode()){
+            throw new Exception("Scanner is unavailable...");
+        }
+        application.blockScanner(); // Prevent user interaction with the machine
+        scanner.scan(item); // Scan the barcode
+    }
+
+    // Method to store and verify product information in the software
+    private void storeProduct(BarcodedProduct product){
+        application.store(product);
+    }
+}
+
