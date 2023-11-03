@@ -7,10 +7,12 @@ import java.util.Set;
 import com.jjjwelectronics.AbstractDevice;
 import com.thelocalmarketplace.hardware.BarcodedProduct;
 import com.thelocalmarketplace.hardware.SelfCheckoutStation;
+import com.thelocalmarketplace.hardware.external.ProductDatabases;
 
 import powerutility.PowerGrid;
 
 public class ApplicationContext extends AbstractDevice {
+
     // The current application points to the self-checkout station's physical machine
     public SelfCheckoutStation checkoutStation;
 
@@ -28,10 +30,13 @@ public class ApplicationContext extends AbstractDevice {
     }
 
     public ApplicationContext(SelfCheckoutStation checkoutStation) {
-        this.checkoutStation = checkoutStation;
+    	// Seed the database with initial product data
+        DatabaseSeeder.seedDatabase();
 
-        // Set the status of the self-checkout station
-        this.deviceStatusHashMap.put(checkoutStation.baggingArea, DeviceStatus.UN_START);
+        this.checkoutStation = checkoutStation;
+        
+        // Set status of the check out station
+        this.deviceStatusHashMap.put(checkoutStation, DeviceStatus.UN_START);
 
         // Set the status of the bagging area
         this.deviceStatusHashMap.put(checkoutStation.baggingArea, DeviceStatus.UN_START);
@@ -69,7 +74,14 @@ public class ApplicationContext extends AbstractDevice {
 
     // Store scanned product information
     public void store(BarcodedProduct product) {
-        this.currentProduct = product;
+    	// Verify the product exists in the database before storing
+        if (ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(product.getBarcode())) {
+            this.currentProduct = product;
+        } else {
+            // Handle the case where the product does not exist in the database
+            // For example, you might log an error or display a message to the user
+            System.out.println("Product does not exist in the database.");
+        }
     }
 
     // Verify the characteristics of a product

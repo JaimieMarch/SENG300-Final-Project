@@ -15,26 +15,21 @@ public class BaggingAreaListenerImpl extends AbstractIDeviceListener implements 
         super(context); // Call to the superclass constructor with context
     }
 
-    // Called when the weight on the scale has changed
     @Override
     public void theMassOnTheScaleHasChanged(IElectronicScale scale, Mass mass) {
-        // Unblock any interactions, assuming the change is normal
-        context.unBlock();
+        // TODO: Add logic to validate the weight change against expected product weights
 
-        // Notify the customer about the weight change
-        System.out.println("Notifying customer...");
+        context.unBlock();
+        System.out.println("Weight updated.");
     }
 
-    // Called when the weight on the scale exceeds the limit
     @Override
     public void theMassOnTheScaleHasExceededItsLimit(IElectronicScale scale) {
-        // Print a message to request an overload check
-        System.out.println("Please review the overload...");
+        System.err.println("Weight overload. Assistance required.");
     }
 
-    // Called when the weight on the scale no longer exceeds the limit
     @Override
     public void theMassOnTheScaleNoLongerExceedsItsLimit(IElectronicScale scale) {
-        // This can be implemented to handle the case when the weight is back within the limits
+        System.out.println("Weight is back within limits. Resuming normal operations.");
     }
 }

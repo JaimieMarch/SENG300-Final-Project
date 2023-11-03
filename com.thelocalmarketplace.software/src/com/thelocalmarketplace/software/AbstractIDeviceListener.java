@@ -11,16 +11,20 @@ public abstract class AbstractIDeviceListener implements  IDeviceListener {
         // Default constructor
     }
 
-    public AbstractIDeviceListener(ApplicationContext context){
-        // Constructor that initializes the context
+    public AbstractIDeviceListener(ApplicationContext context) {
+        if (context == null) {
+            throw new IllegalArgumentException("Context cannot be null");
+        }
         this.context = context;
     }
 
     // Called when a specific device has been enabled
     @Override
     public void aDeviceHasBeenEnabled(IDevice<? extends IDeviceListener> device) {
-        // Notify the software that the current device's status has been set to ENABLED and is ready for work
-       this.context.setDeviceStatus(device,DeviceStatus.ABLE);
+    	if (device == null) {
+            throw new IllegalArgumentException("Device cannot be null");
+        }
+        this.context.setDeviceStatus(device, DeviceStatus.ABLE);
     }
 
     // Called when a specific device has been disabled
@@ -34,7 +38,7 @@ public abstract class AbstractIDeviceListener implements  IDeviceListener {
     @Override
     public void aDeviceHasBeenTurnedOn(IDevice<? extends IDeviceListener> device) {
         // Change the software's device status from starting to started
-        this.context.setDeviceStatus(device,DeviceStatus.STARTED);
+        this.context.setDeviceStatus(device,DeviceStatus.START);
 
         // Enable the device's status
         device.enable();

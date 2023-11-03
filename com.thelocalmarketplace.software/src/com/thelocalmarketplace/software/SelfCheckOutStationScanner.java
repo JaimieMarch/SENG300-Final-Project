@@ -8,6 +8,7 @@ import com.jjjwelectronics.scanner.BarcodeScanner;
 import com.jjjwelectronics.scanner.BarcodedItem;
 import com.thelocalmarketplace.hardware.BarcodedProduct;
 import com.thelocalmarketplace.hardware.Product;
+import com.thelocalmarketplace.hardware.external.ProductDatabases;
 
 import powerutility.PowerGrid;
 
@@ -31,16 +32,18 @@ public abstract class SelfCheckOutStationScanner {
         application.setCheckoutStationDeviceStatus(DeviceStatus.ABLE);
     };
 
-    // Method for customers to add products
     public void addProduct(Product product) throws Exception {
-        BarcodedItem barcodedItem = getBarcodedItem(product); // Get barcoded item from product
+        BarcodedItem barcodedItem = getBarcodedItem(product);
 
-        storeProduct((BarcodedProduct) product); // Store the barcoded product
-
-        scan(barcodedItem); // Scan the barcode
-
-        addAnItem(barcodedItem); // Place the item on the bagging area
-    }
+        // Verify the product exists in the database before proceeding
+        if (ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcodedItem.getBarcode())) {
+            storeProduct((BarcodedProduct) product);
+            scan(barcodedItem);
+            addAnItem(barcodedItem);
+        } else {
+            System.out.println("Scanned product does not exist in the database.");
+        }
+        }
 
     private void addAnItem(Item item) throws Exception {
         ElectronicScale baggingArea = application.checkoutStation.baggingArea;

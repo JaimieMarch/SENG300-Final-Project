@@ -23,18 +23,21 @@ public class BarcodeScannerListenerImpl extends AbstractIDeviceListener implemen
 
     @Override
     public void aBarcodeHasBeenScanned(IBarcodeScanner barcodeScanner, Barcode barcode) {
-        // Upon receiving scanned barcode information, proceed to store it
-        Map<Barcode, BarcodedProduct> barcodedProductDatabase = ProductDatabases.BARCODED_PRODUCT_DATABASE;
+    	
+    	Map<Barcode, BarcodedProduct> barcodedProductDatabase = ProductDatabases.BARCODED_PRODUCT_DATABASE;
 
         // Retrieve the product details from the database
         BarcodedProduct barcodedProduct = barcodedProductDatabase.get(barcode);
 
-        // Validate the product information
-        boolean res = context.verify(barcodedProduct);
+        if (barcodedProduct != null) {
+            // Validate the product information
+            boolean res = context.verify(barcodedProduct);
 
-        // If the validation fails, print an error message
-        if(!res){
-            System.out.println("The product does not match...");
+            if (!res) {
+                System.out.println("The product does not match...");
+            }
+        } else {
+            System.out.println("Scanned barcode does not exist in the database.");
         }
     }
 }
