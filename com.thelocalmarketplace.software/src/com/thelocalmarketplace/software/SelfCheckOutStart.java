@@ -1,6 +1,11 @@
 package com.thelocalmarketplace.software;
 
+import java.util.Scanner;
+
 import com.thelocalmarketplace.hardware.SelfCheckoutStation;
+import com.thelocalmarketplace.software.SelfCheckOutStationScanner;
+
+import powerutility.PowerGrid;
 
 //Start a self check out software
 public class SelfCheckOutStart extends SelfCheckOutStationScanner {
@@ -21,19 +26,43 @@ public class SelfCheckOutStart extends SelfCheckOutStationScanner {
 
         return context;
     }
-
-    public static void main(String[] args) throws Exception {
+   
+    public class main{
+    	public main(String[] args) {
+    	SelfCheckoutStation scs = new SelfCheckoutStation();
+    	ApplicationContext ac = new ApplicationContext(scs);
+    	PowerGrid pg = PowerGrid.instance();
+    	PayWithCoin pc = new PayWithCoin();
+    	WeightDiscrepancy wd = new WeightDiscrepancy();
     	
-    	// Seed the database with initial product data
-        DatabaseSeeder.seedDatabase();
-        
-        SelfCheckOutStart selfCheckOutStart = new SelfCheckOutStart();
+    	
+    	ac.plugIn(pg);
+    	ac.turnOn();
+    	
+    	DatabaseSeeder.seedDatabase();
+    	
+    	main.StartSession();
+    	
+    	
+    	
+  
+    }
 
-        // Start the self-checkout process
-        selfCheckOutStart.start(null);
-
-        // Add barcoded products
-        selfCheckOutStart.addProduct(null);
+    	public void Status() {
+        	public static boolean sessionStarted = false;
+    	
+        private static void StartSession() {
+        	Scanner scanner = new Scanner(System.in);
+        	if(sessionStarted == true) {
+        		return;
+        	}
+        	sessionStarted = true;
+        	System.out.println("Welcome to self checkout!");
+        	System.out.println("Enter 1 to begin");
+        	scanner.nextLine();
+        	System.out.println("Session Starting!");
+        	scanner.close();
+        	
+        }
     }
 }
-
