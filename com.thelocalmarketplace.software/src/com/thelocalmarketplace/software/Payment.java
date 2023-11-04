@@ -15,6 +15,10 @@ public class Payment {
 	private static BigDecimal coinValue;
 	private static ApplicationContext application;
 	private static BarcodedProduct product;
+
+	public void getCoin(Coin cointest) {
+	    this.coin = cointest;
+	}
 	
 	/**
 	 * Payment is done by receiving coin, compare its value to the total cost needed to pay and display the remaining output. 
