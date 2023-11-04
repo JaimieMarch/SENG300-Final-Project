@@ -33,7 +33,7 @@ public class SelfCheckOutStart extends SelfCheckOutStationScanner {
     	SelfCheckoutStation scs = new SelfCheckoutStation();
     	ApplicationContext ac = new ApplicationContext(scs);
     	PowerGrid pg = PowerGrid.instance();
-    	PayWithCoin pc = new PayWithCoin();
+    	Payment pc = new Payment();
     	WeightDiscrepancy wd = new WeightDiscrepancy();
     	
     	//Plugging in and then turning on this instance of the station
