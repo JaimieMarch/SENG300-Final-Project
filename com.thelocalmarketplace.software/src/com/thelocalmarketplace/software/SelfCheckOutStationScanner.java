@@ -37,8 +37,8 @@ public abstract class SelfCheckOutStationScanner {
 
         // Verify the product exists in the database before proceeding
         if (ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcodedItem.getBarcode())) {
-            storeProduct((BarcodedProduct) product);
-            scan(barcodedItem);
+        	scan(barcodedItem);
+        	storeProduct((BarcodedProduct) product);
             addAnItem(barcodedItem);
         } else {
             System.out.println("Scanned product does not exist in the database.");
@@ -88,6 +88,7 @@ public abstract class SelfCheckOutStationScanner {
     // Method to store and verify product information in the software
     private void storeProduct(BarcodedProduct product){
         application.store(product);
+        application.calculateTotalCost(product);
     }
 }
 

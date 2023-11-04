@@ -83,6 +83,16 @@ public class ApplicationContext extends AbstractDevice {
             System.out.println("Product does not exist in the database.");
         }
     }
+    
+    public double calculateTotalCost(BarcodedProduct product) 
+    {
+        double totalCost = 0.0;
+        double price = product.getPrice(); 
+        
+        totalCost += price; 
+        
+        return totalCost;
+    }
 
     // Verify the characteristics of a product
     public boolean verify(BarcodedProduct barcodedProduct) {
@@ -109,5 +119,7 @@ public class ApplicationContext extends AbstractDevice {
         this.setDeviceStatus(this.checkoutStation.baggingArea, DeviceStatus.ABLE);
         this.setCheckoutStationDeviceStatus(DeviceStatus.ABLE);
     }
+    
+
 }
 
