@@ -16,6 +16,8 @@ public class SelfCheckoutLogic {
 		// start session should wipe all values to start new session
 		// prolly implemented with button in mind
 
+
+
 	}
 	
 	public static void main(String[] args) {

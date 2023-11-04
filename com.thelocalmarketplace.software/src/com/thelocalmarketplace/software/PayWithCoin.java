@@ -3,8 +3,8 @@ package com.thelocalmarketplace.software;
 import java.math.BigDecimal;
 	import com.tdc.IComponent;
 	import com.tdc.IComponentObserver;
-	import com.tdc.coin.AbstractCoinValidator;
-	import com.tdc.coin.CoinValidatorObserver;
+import com.tdc.coin.CoinValidator;
+import com.tdc.coin.CoinValidatorObserver;
 	import com.thelocalmarketplace.hardware.SelfCheckoutStation;
 
 	import powerutility.PowerGrid;
@@ -49,12 +49,12 @@ public class PayWithCoin implements CoinValidatorObserver{
 	 	* {@code SelfCheckoutMachine} and therefore its balance.                
 		*/
 		@Override
-		public void validCoinDetected(AbstractCoinValidator validator, BigDecimal value) {
+		public void validCoinDetected(CoinValidator validator, BigDecimal value) {
 			this.totalcost = totalcost.add(value);
 			
 		}
 		@Override
-		public void invalidCoinDetected(AbstractCoinValidator validator) {
+		public void invalidCoinDetected(CoinValidator validator) {
 			// TODO Auto-generated method stub
 			
 		}

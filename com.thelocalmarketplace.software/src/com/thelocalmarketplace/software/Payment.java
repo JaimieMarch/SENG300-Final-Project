@@ -27,7 +27,7 @@ public class Payment {
 	 * @throws DisabledException
 	 */
 	
-	public static void main()throws CashOverloadException, DisabledException {
+	public static void PayWithCoin()throws CashOverloadException, DisabledException {
 		double amount = application.calculateTotalCost(product);
 		System.out.println("The Amount to be Paid is: " + amount);
 		System.out.println("Insert a Coin");
