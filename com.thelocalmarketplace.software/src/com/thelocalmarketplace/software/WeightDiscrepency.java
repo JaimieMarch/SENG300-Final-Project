@@ -13,67 +13,67 @@ import com.thelocalmarketplace.software.ApplicationContext;
 
 
 public class WeightDiscrepency extends ElectronicScale{
-	private ElectronicScale scale;
-    private double expectedWeight;
+//    private ElectronicScale scale;
+//    private double expectedWeight;
+//
+//    public WeightDiscrepency(double expectedWeight) {
+//        this.expectedWeight = expectedWeight;
+//        this.scale = new ElectronicScale();
+//    }
+//
+//
+//    public void addBarcodedProduct(BarcodedProduct product) {
+//        Item item = new Item(product.getExpectedWeight()); // Create an item from the product
+//
+//        try {
+//            scale.addAnItem(item);
+//
+//            if (!isWeightAsExpected()) {
+//                blockStation();
+//                signalCustomer("Weight discrepancy detected");
+//                signalAttendant("Weight discrepancy detected. Please assist the customer.");
+//            }
+//        } catch (NoPowerException | NullPointerSimulationException | InvalidArgumentSimulationException e) {
+//        }
+//    }
+//
+//    private boolean isWeightAsExpected() {
+//        double currentWeight = currentMass.getValue().doubleValue(); // Convert Mass to double
+//        return currentWeight == expectedWeight;
+//    }
+//
+//    private void blockStation() {
+//        ApplicationContext applicationContext = new ApplicationContext();
+//        applicationContext.blockScanner(); // Block the scanner
+//        applicationContext.blockBaggingArea(); //Block bagging area
+//    }
+//
+//    private void unblockStation() {
+//        ApplicationContext applicationContext = new ApplicationContext();
+//        applicationContext.unBlock(); // unBlock the scanner and bagging area
+//    }
+//
+//    private void signalCustomer(String message) {
+//        if (message.contains("add or remove an item")) {
+//            // Handle customer request to adjust the weight
+//            customerAdjustWeight(0.0); // pass the adjustment as needed
+//        } else if (message.contains("do not place item in bagging area")) {
+//            // Handle customer's "do not bag" request
+//            customerDoNotBagRequest();
+//        }
+//    }
+//
+//    public void customerAdjustWeight(double adjustment) {
+//        expectedWeight += adjustment; //Adjust weight
+//    }
+//
+//    public void customerDoNotBagRequest() {
+//        signalCustomer("Customer: Do not place item in bagging area.");
+//    }
+//
+//    private void signalAttendant(String message) {
+//        System.out.println("System to Attendant: " + message);
+//    }
 
-    public WeightDiscrepency(double expectedWeight) {
-        this.expectedWeight = expectedWeight;
-        this.scale = new ElectronicScale();
-        }
-    
 
-    public void addBarcodedProduct(BarcodedProduct product) {
-        Item item = new Item(product.getExpectedWeight()); // Create an item from the product
-
-        try {
-            scale.addAnItem(item);
-
-            if (!isWeightAsExpected()) {
-                blockStation();
-                signalCustomer("Weight discrepancy detected");
-                signalAttendant("Weight discrepancy detected. Please assist the customer.");
-            }
-        } catch (NoPowerException | NullPointerSimulationException | InvalidArgumentSimulationException e) {
-        }
-    }
-
-    private boolean isWeightAsExpected() {
-        double currentWeight = currentMass.getValue().doubleValue(); // Convert Mass to double
-        return currentWeight == expectedWeight;
-    }
-
-    private void blockStation() {
-    	ApplicationContext applicationContext = new ApplicationContext();
-        applicationContext.blockScanner(); // Block the scanner
-        applicationContext.blockBaggingArea(); //Block bagging area
-    }
-
-    private void unblockStation() {
-     	ApplicationContext applicationContext = new ApplicationContext();
-        applicationContext.unBlock(); // unBlock the scanner and bagging area
-    }
-
-    private void signalCustomer(String message) {
-        if (message.contains("add or remove an item")) {
-            // Handle customer request to adjust the weight
-            customerAdjustWeight(0.0); // pass the adjustment as needed
-        } else if (message.contains("do not place item in bagging area")) {
-            // Handle customer's "do not bag" request
-            customerDoNotBagRequest();
-        }
-    }
-    
-    public void customerAdjustWeight(double adjustment) {
-        expectedWeight += adjustment; //Adjust weight
-    }
-    
-    public void customerDoNotBagRequest() {
-        signalCustomer("Customer: Do not place item in bagging area.");
-    }
-
-    private void signalAttendant(String message) {
-        System.out.println("System to Attendant: " + message);
-    }
-    
-   
 }

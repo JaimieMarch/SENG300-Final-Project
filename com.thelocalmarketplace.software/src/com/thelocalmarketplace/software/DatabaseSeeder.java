@@ -10,9 +10,15 @@ import com.thelocalmarketplace.hardware.external.ProductDatabases;
 public class DatabaseSeeder {
 
 	public static void seedDatabase() {
+            Numeral[] code = {Numeral.zero, Numeral.zero, Numeral.zero, Numeral.one};
+            Barcode barcode1 = new Barcode(code);
+
+            Numeral[] code2 = {Numeral.zero, Numeral.zero, Numeral.one, Numeral.one};
+            Barcode barcode2 = new Barcode(code2);
+
         // Create barcoded products
-        BarcodedProduct product1 = new BarcodedProduct(new Barcode(new Numeral[0001]),"Milk", (long) 3.50, 1000);
-        BarcodedProduct product2 = new BarcodedProduct(new Barcode(new Numeral[0002]), "Bread", (long) 2.00, 500);
+        BarcodedProduct product1 = new BarcodedProduct(barcode1,"Milk", (long) 3.50, 1000);
+        BarcodedProduct product2 = new BarcodedProduct(barcode2, "Bread", (long) 2.00, 500);
 
         // Populate the barcoded product database
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(product1.getBarcode(), product1);

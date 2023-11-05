@@ -26,7 +26,7 @@ public class ApplicationContext extends AbstractDevice {
     private BarcodedProduct currentProduct;
 
     // Singleton pattern to ensure there is a physical machine
-    private ApplicationContext() {
+    public ApplicationContext() {
     }
 
     public ApplicationContext(SelfCheckoutStation checkoutStation) {

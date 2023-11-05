@@ -27,26 +27,7 @@ public class SelfCheckOutStart extends SelfCheckOutStationScanner {
         return context;
     }
    
-    public void main(String[] args) {
-    	//initialization of 5 key components
-    	SelfCheckoutStation scs = new SelfCheckoutStation();
-    	ApplicationContext ac = new ApplicationContext(scs);
-    	PowerGrid pg = PowerGrid.instance();
-    	PayWithCoin pc = new PayWithCoin();
-    	WeightDiscrepancy wd = new WeightDiscrepancy();
-    	
-    	
-    	//Plugging in and then turning on this instance of the station
-    	ac.plugIn(pg);
-    	ac.turnOn();
-    	
-    	//initializing the database for the program
-    	DatabaseSeeder.seedDatabase();
-    	
-    	//displays a start text and prompts user to hit enter before continuing
-    	Status();
-    	
-    }
+
 
 	public void Status() {
         boolean sessionStarted = false;
