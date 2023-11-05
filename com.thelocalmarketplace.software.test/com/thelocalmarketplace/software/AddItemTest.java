@@ -156,8 +156,8 @@ public class AddItemTest {
         Barcode barcode2 = new Barcode(code2);
 
         // Create barcoded products
-        BarcodedProduct product1 = new BarcodedProduct(barcode1,"Milk", (long) 3.50, 1000);
-        BarcodedProduct product2 = new BarcodedProduct(barcode2, "Bread", (long) 2.00, 500);
+        BarcodedProduct milk = new BarcodedProduct(barcode1,"Milk", (long) 3.50, 1000);
+        BarcodedProduct bread = new BarcodedProduct(barcode2, "Bread", (long) 2.00, 500);
     }
 
 
@@ -178,8 +178,19 @@ public class AddItemTest {
     }
 
 
+    @Test(expected = Exception.class)
+    public void testAddProduct_ProductDoesNotExistInSystem() {
+
+
+    }
+
     @Test
-    public void testAddProduct() {
+    public void testTotalCostAfterOneAdd(){
+
+    }
+
+    @Test
+    public void testTotalCostAfterMultipleAdd(){
 
     }
 }
