@@ -2,12 +2,12 @@ package com.thelocalmarketplace.software;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import com.jjjwelectronics.Item;
 import com.jjjwelectronics.scale.AbstractElectronicScale;
 import com.jjjwelectronics.scale.ElectronicScale;
 import com.jjjwelectronics.scanner.BarcodedItem;
 import com.thelocalmarketplace.hardware.BarcodedProduct;
-
+import com.jjjwelectronics.Item;
+import com.jjjwelectronics.Mass;
 import ca.ucalgary.seng300.simulation.InvalidArgumentSimulationException;
 import ca.ucalgary.seng300.simulation.NullPointerSimulationException;
 import powerutility.NoPowerException;
@@ -16,22 +16,34 @@ import com.thelocalmarketplace.software.SelfCheckOutStationScanner;
 
 
 public class WeightDiscrepency extends ElectronicScale{
-	private ElectronicScale scale;
     private double expectedWeight;
 
     	
     public WeightDiscrepency(double expectedWeight) {
         this.expectedWeight = expectedWeight;
-        this.scale = new ElectronicScale();
         }
+    
+    public double getExpectedWeight(BarcodedProduct product) {
+    	return product.getExpectedWeight();
+    
+    }
+    
+    public class NewItem extends Item {
+        public NewItem(Mass mass) {
+            super(mass);
+        }
+    }
+    
+    public void addBarcodedproduct(BarcodedProduct product) {
+    	double productWeight = getExpectedWeight(product);
+    	Mass productMass = new Mass(productWeight);
+        Item item = new NewItem(productMass);
 
-    public void addBarcodedProduct(BarcodedProduct product) {
-    	Product product = new Product(product.getExpectedWeight());
     	
     	try {
-    		scale.addProduct(product);
+    		addAnItem(item);
     		
-            if (!isWeightAsExpected()) {
+            if (!isWeightAsExpected(productWeight)) {
                 blockStation();
                 signalCustomer("Weight discrepancy detected");
                 signalAttendant("Weight discrepancy detected. Please assist the customer.");
@@ -41,8 +53,8 @@ public class WeightDiscrepency extends ElectronicScale{
         }
     }
 
-    private boolean isWeightAsExpected() {
-        double currentWeight = currentMass.getValue().doubleValue(); // Convert Mass to double
+    private boolean isWeightAsExpected(double productWeight) {
+    	double currentWeight = getCurrentMassOnTheScale().getMassValue();
         return currentWeight == expectedWeight;
     }
 
