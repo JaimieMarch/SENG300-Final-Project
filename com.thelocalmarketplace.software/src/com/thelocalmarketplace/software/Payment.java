@@ -10,11 +10,17 @@ import com.thelocalmarketplace.hardware.BarcodedProduct;
  * Class to make the payment 
  */
 public class Payment {
+
+
 	private static PayWithCoin pc;
 	private static Coin coin;
 	private static BigDecimal coinValue;
 	private static ApplicationContext application;
 	private static BarcodedProduct product;
+
+	public Payment(ApplicationContext application){
+		this.application = application;
+	}
 
 	public void getCoin(Coin cointest) {
 	    this.coin = cointest;
@@ -27,7 +33,7 @@ public class Payment {
 	 * @throws DisabledException
 	 */
 	
-	public static void PayWithCoin()throws CashOverloadException, DisabledException {
+	public static void PayCoin()throws CashOverloadException, DisabledException {
 		double amount = application.calculateTotalCost(product);
 		System.out.println("The Amount to be Paid is: " + amount);
 		System.out.println("Insert a Coin");

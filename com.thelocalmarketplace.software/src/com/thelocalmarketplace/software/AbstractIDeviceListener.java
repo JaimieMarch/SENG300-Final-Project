@@ -1,5 +1,12 @@
 package com.thelocalmarketplace.software;
 
+
+//        Ananya, Jain: 30196069
+//        Emily, Williams: 30122865
+//        Jaimie, Marchuk: 30112841
+//        Kenny, ZENG: 30151985
+//        Yang, YANG: 30156356
+
 import com.jjjwelectronics.IDevice;
 import com.jjjwelectronics.IDeviceListener;
 

@@ -1,5 +1,11 @@
 package com.thelocalmarketplace.software;
 
+//        Ananya, Jain: 30196069
+//        Emily, Williams: 30122865
+//        Jaimie, Marchuk: 30112841
+//        Kenny, ZENG: 30151985
+//        Yang, YANG: 30156356
+
 import com.jjjwelectronics.Numeral;
 import com.jjjwelectronics.scanner.Barcode;
 import com.tdc.coin.Coin;
@@ -158,6 +164,8 @@ public class AddItemTest {
 
     PowerGrid powerGrid = PowerGrid.instance();
 
+    Payment payment;
+
 
     @Before
     public void setup() {
@@ -173,6 +181,11 @@ public class AddItemTest {
         application = (StubApplicationContext) scanner.initApplication();
 
         scanner.start(powerGrid);
+
+        payment = new Payment(application);
+
+        validCoin1 = new CoinStub(BigDecimal.ONE);
+        validCoin2 = new CoinStub(BigDecimal.TEN);
 
         Numeral[] code = {Numeral.zero, Numeral.zero, Numeral.zero, Numeral.one};
         Barcode barcode1 = new Barcode(code);
@@ -234,32 +247,16 @@ public class AddItemTest {
 
     }
 
-    @Test
-    public void testWeightAfterOneAdd() throws Exception {
-        selfCheckOutStationScanner.addProduct(milk);
 
+    @Test
+    public void SuccessfulPayWithCoin() throws Exception {
+        scanner.addProduct(milk);
+        payment.getCoin(validCoin1);
+        payment.PayCoin();
 
     }
 
-    @Test
-    public void testWeightAfterMultipleAdd(){
 
-    }
-
-    @Test
-    public void SuccessfulPayWithCoin(){
-
-    }
-
-    @Test
-    public void checkAmountAfterOneInsert(){
-
-    }
-
-    @Test
-    public void testInsertNull(){
-
-    }
 
 
 
