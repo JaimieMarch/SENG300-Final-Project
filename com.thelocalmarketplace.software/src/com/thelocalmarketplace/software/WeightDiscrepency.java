@@ -7,11 +7,12 @@ import com.jjjwelectronics.scale.AbstractElectronicScale;
 import com.jjjwelectronics.scale.ElectronicScale;
 import com.jjjwelectronics.scanner.BarcodedItem;
 import com.thelocalmarketplace.hardware.BarcodedProduct;
+
 import ca.ucalgary.seng300.simulation.InvalidArgumentSimulationException;
 import ca.ucalgary.seng300.simulation.NullPointerSimulationException;
 import powerutility.NoPowerException;
 import com.thelocalmarketplace.software.ApplicationContext;
-import com.thelocalmarketplace.software.SelfCheckoutStationScanner;
+import com.thelocalmarketplace.software.SelfCheckOutStationScanner;
 
 
 public class WeightDiscrepency extends ElectronicScale{
@@ -25,10 +26,10 @@ public class WeightDiscrepency extends ElectronicScale{
         }
 
     public void addBarcodedProduct(BarcodedProduct product) {
-    	Item item = new Item(product.getExpectedWeight());// Obtain the item from ApplicationContext
+    	Product product = new Product(product.getExpectedWeight());
     	
     	try {
-    		scale.addAnItem(item);
+    		scale.addProduct(product);
     		
             if (!isWeightAsExpected()) {
                 blockStation();
