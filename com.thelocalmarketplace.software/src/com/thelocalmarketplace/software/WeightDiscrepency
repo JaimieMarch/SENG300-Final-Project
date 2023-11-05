@@ -73,9 +73,11 @@ public class WeightDiscrepency extends ElectronicScale{
         if (message.contains("add or remove an item")) {
             // Handle customer request to adjust the weight
             customerAdjustWeight(0.0); // pass the adjustment as needed
+            unblockStation();
         } else if (message.contains("do not place item in bagging area")) {
             // Handle customer's "do not bag" request
             customerDoNotBagRequest();
+            unblockStation();
         }
     }
     
@@ -89,7 +91,7 @@ public class WeightDiscrepency extends ElectronicScale{
 
     private void signalAttendant(String message) {
         System.out.println("System to Attendant: " + message);
+        unblockStation();
     }
-    
    
 }
