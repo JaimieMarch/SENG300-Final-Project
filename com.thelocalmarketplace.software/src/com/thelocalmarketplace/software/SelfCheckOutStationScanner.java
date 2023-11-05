@@ -12,13 +12,16 @@ import com.thelocalmarketplace.hardware.external.ProductDatabases;
 
 import powerutility.PowerGrid;
 
-public abstract class SelfCheckOutStationScanner {
+public class SelfCheckOutStationScanner {
+	
     
     // The application context for the self-checkout station
     private ApplicationContext application = null;
 
     // Abstract method to initialize the self-checkout station
-    public abstract ApplicationContext initApplication();
+    public ApplicationContext initApplication() {
+		return null;
+	}
 
     // Method to start the self-checkout station
     public void start(PowerGrid powerGrid){
@@ -88,7 +91,9 @@ public abstract class SelfCheckOutStationScanner {
     // Method to store and verify product information in the software
     private void storeProduct(BarcodedProduct product){
         application.store(product);
-        application.calculateTotalCost(product);
+        double totalCost = application.calculateTotalCost(product);
+        System.out.println("The total cost of products is:" + totalCost);
+        
     }
 }
 
