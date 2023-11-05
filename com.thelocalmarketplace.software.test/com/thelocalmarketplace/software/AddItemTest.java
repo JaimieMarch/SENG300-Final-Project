@@ -2,6 +2,7 @@ package com.thelocalmarketplace.software;
 
 import com.jjjwelectronics.Numeral;
 import com.jjjwelectronics.scanner.Barcode;
+import com.tdc.coin.Coin;
 import com.thelocalmarketplace.hardware.BarcodedProduct;
 import com.thelocalmarketplace.hardware.SelfCheckoutStation;
 import com.thelocalmarketplace.hardware.external.ProductDatabases;
@@ -9,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import powerutility.PowerGrid;
 
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +20,12 @@ import static org.junit.Assert.assertTrue;
 
 public class AddItemTest {
     SelfCheckOutStationScanner selfCheckOutStationScanner;
+
+    public static class CoinStub extends Coin {
+        public CoinStub(BigDecimal value) {
+            super(Currency.getInstance("CAD") , value);
+        }
+    }
 
     public class StubApplicationContext extends ApplicationContext {
 
@@ -69,7 +78,11 @@ public class AddItemTest {
 
         @Override
         public double calculateTotalCost(BarcodedProduct product) {
-            // Return mock total cost
+
+            double price = product.getPrice();
+
+            totalCost += price;
+
             return totalCost;
         }
 
@@ -133,6 +146,16 @@ public class AddItemTest {
 
     BarcodedProduct bread;
 
+    BarcodedProduct gatorade;
+
+    CoinStub nullCoin;
+
+    CoinStub validCoin1;
+
+    CoinStub validCoin2;
+
+    PowerGrid powerGrid = PowerGrid.instance();
+
 
     @Before
     public void setup() {
@@ -147,7 +170,7 @@ public class AddItemTest {
 
         application = (StubApplicationContext) scanner.initApplication();
 
-
+        scanner.start(powerGrid);
 
         Numeral[] code = {Numeral.zero, Numeral.zero, Numeral.zero, Numeral.one};
         Barcode barcode1 = new Barcode(code);
@@ -155,9 +178,13 @@ public class AddItemTest {
         Numeral[] code2 = {Numeral.zero, Numeral.zero, Numeral.one, Numeral.one};
         Barcode barcode2 = new Barcode(code2);
 
+        Numeral[] code3 = {Numeral.zero, Numeral.one, Numeral.one, Numeral.one};
+        Barcode barcode3 = new Barcode(code3);
+
         // Create barcoded products
-        BarcodedProduct milk = new BarcodedProduct(barcode1,"Milk", (long) 3.50, 1000);
-        BarcodedProduct bread = new BarcodedProduct(barcode2, "Bread", (long) 2.00, 500);
+       milk = new BarcodedProduct(barcode1,"Milk", (long) 3.50, 1000);
+       bread = new BarcodedProduct(barcode2, "Bread", (long) 2.00, 500);
+       gatorade = new BarcodedProduct(barcode3, "Gatorade", (long) 2.00, 500);
     }
 
 
@@ -179,7 +206,8 @@ public class AddItemTest {
 
 
     @Test(expected = Exception.class)
-    public void testAddProduct_ProductDoesNotExistInSystem() {
+    public void testAddProduct_ProductDoesNotExistInSystem() throws Exception {
+        selfCheckOutStationScanner.addProduct(gatorade);
 
 
     }
@@ -193,4 +221,38 @@ public class AddItemTest {
     public void testTotalCostAfterMultipleAdd(){
 
     }
+
+    @Test
+    public void testWeightAfterOneAdd(){
+
+    }
+
+    @Test
+    public void testWeightAfterMultipleAdd(){
+
+    }
+
+    @Test
+    public void SuccessfulPayWithCoin(){
+
+    }
+
+    @Test
+    public void checkAmountAfterOneInsert(){
+
+    }
+
+    @Test
+    public void testInsertNull(){
+
+    }
+
+//    @Test
+//    public void
+//
+//    @Test
+//    public void checkStartedSession(){
+//
+//    }
+
 }
