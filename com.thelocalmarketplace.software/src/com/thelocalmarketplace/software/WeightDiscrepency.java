@@ -64,7 +64,7 @@ public class WeightDiscrepency extends ElectronicScale{
     }
     
     public void customerAdjustWeight(double adjustment) {
-        expectedWeight += adjustment;
+        expectedWeight += adjustment; //Adjust weight
     }
     
     public void customerDoNotBagRequest() {
