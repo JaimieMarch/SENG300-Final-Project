@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AddItemTest {
@@ -34,7 +35,7 @@ public class AddItemTest {
         private BarcodedProduct stubCurrentProduct;
         private boolean isScannerBlocked;
         private boolean isBaggingAreaBlocked;
-        private double totalCost;
+        public double totalCost;
 
         public StubApplicationContext(SelfCheckoutStation checkoutStation) {
             super();
@@ -85,6 +86,7 @@ public class AddItemTest {
 
             return totalCost;
         }
+
 
 
         @Override
@@ -213,17 +215,29 @@ public class AddItemTest {
     }
 
     @Test
-    public void testTotalCostAfterOneAdd(){
+    public void testTotalCostAfterOneAdd() throws Exception {
+        selfCheckOutStationScanner.addProduct(milk);
+        double total = application.totalCost;
+        assertEquals(total, milk.getPrice());
+
+
 
     }
 
     @Test
-    public void testTotalCostAfterMultipleAdd(){
+    public void testTotalCostAfterMultipleAdd() throws Exception {
+        selfCheckOutStationScanner.addProduct(milk);
+        selfCheckOutStationScanner.addProduct(bread);
+
+        double total = application.totalCost;
+        assertEquals(total, milk.getPrice() + bread.getPrice());
 
     }
 
     @Test
-    public void testWeightAfterOneAdd(){
+    public void testWeightAfterOneAdd() throws Exception {
+        selfCheckOutStationScanner.addProduct(milk);
+
 
     }
 
@@ -247,12 +261,6 @@ public class AddItemTest {
 
     }
 
-//    @Test
-//    public void
-//
-//    @Test
-//    public void checkStartedSession(){
-//
-//    }
+
 
 }
