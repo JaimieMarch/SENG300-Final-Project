@@ -11,11 +11,7 @@ import powerutility.NoPowerException;
 
 
 public class WeightDiscrepency extends ElectronicScale{
-    private double expectedWeight;
-
-    	
     public WeightDiscrepency(double expectedWeight) {
-        this.expectedWeight = expectedWeight;
         }
     
     public double getExpectedWeight(BarcodedProduct product) {
@@ -92,7 +88,6 @@ public class WeightDiscrepency extends ElectronicScale{
     }
     
     public void customerAdjustWeight(double adjustment) {
-        expectedWeight += adjustment;
     }
     
     public void customerDoNotBagRequest() {
