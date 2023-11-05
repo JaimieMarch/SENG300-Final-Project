@@ -5,35 +5,38 @@ import java.util.ArrayList;
 import com.jjjwelectronics.Item;
 import com.jjjwelectronics.scale.AbstractElectronicScale;
 import com.jjjwelectronics.scale.ElectronicScale;
+import com.jjjwelectronics.scanner.BarcodedItem;
 import com.thelocalmarketplace.hardware.BarcodedProduct;
 import ca.ucalgary.seng300.simulation.InvalidArgumentSimulationException;
 import ca.ucalgary.seng300.simulation.NullPointerSimulationException;
 import powerutility.NoPowerException;
 import com.thelocalmarketplace.software.ApplicationContext;
+import com.thelocalmarketplace.software.SelfCheckoutStationScanner;
 
 
 public class WeightDiscrepency extends ElectronicScale{
 	private ElectronicScale scale;
     private double expectedWeight;
 
+    	
     public WeightDiscrepency(double expectedWeight) {
         this.expectedWeight = expectedWeight;
         this.scale = new ElectronicScale();
         }
-    
 
     public void addBarcodedProduct(BarcodedProduct product) {
-        Item item = new Item(product.getExpectedWeight()); // Create an item from the product
-
-        try {
-            scale.addAnItem(item);
-
+    	Item item = new Item(product.getExpectedWeight());// Obtain the item from ApplicationContext
+    	
+    	try {
+    		scale.addAnItem(item);
+    		
             if (!isWeightAsExpected()) {
                 blockStation();
                 signalCustomer("Weight discrepancy detected");
                 signalAttendant("Weight discrepancy detected. Please assist the customer.");
             }
         } catch (NoPowerException | NullPointerSimulationException | InvalidArgumentSimulationException e) {
+        	
         }
     }
 
@@ -64,7 +67,7 @@ public class WeightDiscrepency extends ElectronicScale{
     }
     
     public void customerAdjustWeight(double adjustment) {
-        expectedWeight += adjustment; //Adjust weight
+        expectedWeight += adjustment;
     }
     
     public void customerDoNotBagRequest() {
