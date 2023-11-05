@@ -80,14 +80,11 @@ public class WeightDiscrepency extends ElectronicScale{
     private void signalCustomer(String message) {
         if (message.contains("add or remove an item")) {
             // Handle customer request to adjust the weight
-            customerAdjustWeight(0.0); // pass the adjustment as needed
+        	unblockStation();
         } else if (message.contains("do not place item in bagging area")) {
             // Handle customer's "do not bag" request
             customerDoNotBagRequest();
         }
-    }
-    
-    public void customerAdjustWeight(double adjustment) {
     }
     
     public void customerDoNotBagRequest() {
